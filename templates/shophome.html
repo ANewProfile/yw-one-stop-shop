@@ -1,0 +1,74 @@
+<!-- Shop owner's home page template -->
+{% extends "base.html" %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <div>
+            <a class="navbar-brand" href="/">One Stop Shop</a>
+            <button class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                Click to add new product
+            </button>
+        </div>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h2>{{ store.shop_name }}'s Products</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                {% if product.img_link %}
+                <img src="{{ product.img_link }}" class="card-img-top" alt="{{ product.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text">Price: ${{ product.price }}</p>
+                    <p class="card-text">Stock: {{ product.quantity }}</p>
+                    <form action="{{ url_for('update_stock') }}" method="POST">
+                        <input type="hidden" name="product_id" value="{{ product._id }}">
+                        <input type="number" name="quantity" class="form-control mb-2" min="0" value="{{ product.quantity }}">
+                        <button type="submit" class="btn btn-primary">Update Stock</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Add Product Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('add_product') }}" method="POST">
+                    <div class="mb-3">
+                        <input type="text" name="name" class="form-control" placeholder="Product name" required>
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="description" class="form-control" placeholder="Description" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <input type="number" name="price" class="form-control" placeholder="Unit price" step="0.01" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="number" name="quantity" class="form-control" placeholder="Quantity" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="url" name="img_link" class="form-control" placeholder="Image link">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+<!-- Checkout page template -->
+{% extends "base.html" %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="/">One Stop Shop</a>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h2>Checkout</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Shipping Information</h5>
+                    <form action="{{ url_for('process_order') }}" method="POST">
+                        <div class="mb-3">
+                            <input type="text" name="name" class="form-control" placeholder="Full Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="tel" name="phone" class="form-control" placeholder="Phone Number" required>
+                        </div>
+                        <div class="mb-3">
+                            <textarea name="address" class="form-control" placeholder="Shipping Address" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" name="card_number" class="form-control" placeholder="Card Number" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <input type="text" name="expiry" class="form-control" placeholder="MM/YY" required>
+                            </div>
+                            <div class="col">
+                                <input type="text" name="cvv" class="form-control" placeholder="CVV" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Place Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Order Summary</h5>
+                    {% for item in cart_items %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>{{ item.product.name }} x {{ item.quantity }}</span>
+                        <span>${{ "%.2f"|format(item.product.price * item.quantity) }}</span>
+                    </div>
+                    {% endfor %}
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <strong>Total:</strong>
+                        <strong>${{ "%.2f"|format(total) }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

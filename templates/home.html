@@ -1,0 +1,117 @@
+<!-- Home page template displaying stores and products -->
+{% extends "base.html" %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="/">One Stop Shop</a>
+        <div class="d-flex">
+            <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#registerModal">
+                Register as owner
+            </button>
+            <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+                Login as owner
+            </button>
+            <a href="{{ url_for('view_cart') }}" class="btn btn-info">View Cart</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <!-- Stores Section -->
+    <h2>Stores</h2>
+    <div class="row">
+        {% for store in stores %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ store.shop_name }}</h5>
+                    <p class="card-text">Owner: {{ store.owner_name }}</p>
+                    <a href="{{ url_for('shop_view', email=store.email) }}" class="btn btn-primary">Visit Store</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Products Section -->
+    <h2 class="mt-4">Products</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                {% if product.img_link %}
+                <img src="{{ product.img_link }}" class="card-img-top" alt="{{ product.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text">Price: ${{ product.price }}</p>
+                    <p class="card-text">Stock: {{ product.quantity }}</p>
+                    <form action="{{ url_for('add_to_cart') }}" method="POST">
+                        <input type="hidden" name="product_id" value="{{ product._id }}">
+                        <input type="number" name="quantity" class="form-control mb-2" min="1" max="{{ product.quantity }}" value="1">
+                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Register Store</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('register_store') }}" method="POST">
+                    <div class="mb-3">
+                        <input type="text" name="shop_name" class="form-control" placeholder="Name of the shop" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="owner_name" class="form-control" placeholder="Name of the owner" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" name="email" class="form-control" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="tel" name="contact" class="form-control" placeholder="Contact (Phone Number)" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" name="password" class="form-control" placeholder="Create password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('login') }}" method="POST">
+                    <div class="mb-3">
+                        <input type="email" name="email" class="form-control" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

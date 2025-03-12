@@ -1,0 +1,92 @@
+/* Main styling for One Stop Shop */
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    margin-bottom: 2rem;
+}
+
+.product-card {
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.product-image {
+    height: 200px;
+    object-fit: cover;
+}
+
+.cart-badge {
+    position: relative;
+    top: -8px;
+    right: -8px;
+    padding: 4px 8px;
+    border-radius: 50%;
+    background-color: #dc3545;
+    color: white;
+}
+
+.store-section {
+    margin-bottom: 3rem;
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.alert {
+    margin-top: 1rem;
+}
+/* Main styling for One Stop Shop */
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    margin-bottom: 2rem;
+}
+
+.product-card {
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.product-image {
+    height: 200px;
+    object-fit: cover;
+}
+
+.cart-badge {
+    position: relative;
+    top: -8px;
+    right: -8px;
+    padding: 4px 8px;
+    border-radius: 50%;
+    background-color: #dc3545;
+    color: white;
+}
+
+.store-section {
+    margin-bottom: 3rem;
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.alert {
+    margin-top: 1rem;
+}
