@@ -322,4 +322,4 @@ def process_order():
         return redirect(url_for('checkout_page'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
