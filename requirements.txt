@@ -1,0 +1,6 @@
+flask
+pymongo
+bson
+certifi
+flask_pymongo
+datetime
